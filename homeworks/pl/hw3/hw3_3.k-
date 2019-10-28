@@ -1,0 +1,58 @@
+let proc leaf(i) = {val:=i, ltree:=unit, rtree:=unit} in
+let proc makeLtree(i, tr) = {val:=i, ltree:=tr, rtree:=unit} in
+let proc makeRtree(i, tr) = {val:=i, ltree:=unit, rtree:=tr} in
+let proc makeTree(i, trl, trr) = {val:=i, ltree:=trl, rtree:=trr} in
+
+let proc isEmpty(tr) = (tr=unit) in
+let proc rTree(tr) = tr.rtree in
+let proc lTree(tr) = tr.ltree in
+let proc nodeVal(tr) = tr.val in
+let proc dft(tr) = if (isEmpty(tr)) then unit
+									 else ((write nodeVal(tr));dft(tr.ltree);dft(tr.rtree)) in
+
+let proc height(tr) = if (isEmpty(tr)) then 0
+											else (
+													let lheight := height(tr.ltree) in
+													let rheight := height(tr.rtree) in
+													if (rheight<lheight) then lheight+1
+													else rheight+1) 
+										 in
+
+let proc lvlprt(tr, i) = if (isEmpty(tr)) then unit
+												 else (
+														if (i=1) then (write nodeVal(tr))
+														else (
+																lvlprt(tr.ltree, i-1);
+																lvlprt(tr.rtree, i-1)))
+												 in
+
+let proc bft(tr) = 	let h := height(tr) in
+										let i := 1 in
+										while (i<(h+1)) do (
+												lvlprt(tr, i);
+												i:=i+1 )
+													
+in 
+
+
+let t1 := makeTree (1, leaf(2), leaf(3)) in 
+let t0 := makeTree (0, t1, leaf(4)) in
+let t0 := makeTree (2, t0, leaf(3)) in 
+let t0 := makeTree (-3, t0, t1) in 
+let t0 := makeLtree (8, t1) in 
+let t0 := makeRtree (23, t0) in 
+let t1 := makeRtree (-42, t0) in 
+let t1 := makeLtree (5, t1) in 
+let t1 := makeTree (8, t1, t0) in 
+let t1 := makeTree (30, t0, t1) in 
+let t0 := makeLtree (0, t1) in 
+let t0 := makeTree (-4, t1, t0) in 
+let t2 := makeTree (9, t1, leaf(5)) in 
+let t2 := makeTree (-32, t2, t2) in 
+let t2 := makeRtree (1, t1) in 
+bft (t0) ;
+bft (t1) ;
+dft (t0) ;
+dft (t1) ;
+bft (t2) ;
+dft (t2)
