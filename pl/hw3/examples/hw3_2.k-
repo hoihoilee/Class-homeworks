@@ -1,0 +1,31 @@
+let proc numch1(x) =
+	if (x < 10) then 1
+	else 1 + numch1(x-10) in
+
+let proc numch2(x) =
+	if (x < 100) then numch1(x)
+	else numch1(x) + numch2(x-100) in
+
+let proc numch3(x) =
+	if (x < 500) then numch2(x)
+	else numch2(x) + numch3(x-500) in
+
+let proc numch4(x) =
+  if (x < 1000) then numch3(x)
+  else numch3(x) + numch4(x-1000) in
+
+let proc numch5(x) =
+	if (x < 5000) then numch4(x)
+	else numch4(x) + numch5(x-5000) in
+
+let proc numch6(x) =
+	if (x < 10000) then numch5(x)
+	else numch5(x) + numch6(x-10000) in
+
+let proc numch(x) =
+	if (x < 50000) then numch6(x)
+	else numch6(x) + numch(x-50000) in
+	
+let input := 0 in
+read input;
+write (numch(input))
